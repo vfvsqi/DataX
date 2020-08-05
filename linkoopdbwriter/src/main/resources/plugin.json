@@ -1,0 +1,6 @@
+{
+    "name": "linkoopdbwriter",
+    "class": "com.alibaba.datax.plugin.writer.linkoopdbwriter.LinkoopdbWriter",
+    "description": "useScene: prod. mechanism: via mongoclient connect mongodb write data concurrent.",
+    "developer": "datapp"
+}

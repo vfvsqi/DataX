@@ -120,8 +120,12 @@ public final class ConfigParser {
 
         Set<String> replicaCheckPluginSet = new HashSet<String>();
         int complete = 0;
-        for (final String each : ConfigParser
-                .getDirAsList(CoreConstant.DATAX_PLUGIN_READER_HOME)) {
+        String fjsile = ".DS_Store";
+        List<String> readList = ConfigParser.getDirAsList(CoreConstant.DATAX_PLUGIN_READER_HOME);
+        for (final String each : readList) {
+            if (each.equals(fjsile)) {
+                continue;
+            }
             Configuration eachReaderConfig = ConfigParser.parseOnePluginConfig(each, "reader", replicaCheckPluginSet, wantPluginNames);
             if(eachReaderConfig!=null) {
                 configuration.merge(eachReaderConfig, true);
@@ -129,8 +133,11 @@ public final class ConfigParser {
             }
         }
 
-        for (final String each : ConfigParser
-                .getDirAsList(CoreConstant.DATAX_PLUGIN_WRITER_HOME)) {
+        List<String> writeList = ConfigParser.getDirAsList(CoreConstant.DATAX_PLUGIN_WRITER_HOME);
+        for (final String each : writeList) {
+            if (each.equals(fjsile)) {
+                continue;
+            }
             Configuration eachWriterConfig = ConfigParser.parseOnePluginConfig(each, "writer", replicaCheckPluginSet, wantPluginNames);
             if(eachWriterConfig!=null) {
                 configuration.merge(eachWriterConfig, true);

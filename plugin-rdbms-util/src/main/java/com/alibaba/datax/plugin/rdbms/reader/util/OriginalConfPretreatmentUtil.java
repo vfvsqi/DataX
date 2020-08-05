@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public final class OriginalConfPretreatmentUtil {
@@ -81,8 +82,8 @@ public final class OriginalConfPretreatmentUtil {
             connConf.getNecessaryValue(Key.JDBC_URL,
                     DBUtilErrorCode.REQUIRED_VALUE);
 
-            List<String> jdbcUrls = connConf
-                    .getList(Key.JDBC_URL, String.class);
+//            List<String> jdbcUrls = Arrays.asList("jdbc:linkoopdb:tcp://test91:9105/ldb");
+            List<String> jdbcUrls = connConf.getList(Key.JDBC_URL, String.class);
 
             String jdbcUrl;
             if (isPreCheck) {
@@ -130,8 +131,8 @@ public final class OriginalConfPretreatmentUtil {
     private static void dealColumnConf(Configuration originalConfig) {
         boolean isTableMode = originalConfig.getBool(Constant.IS_TABLE_MODE);
 
-        List<String> userConfiguredColumns = originalConfig.getList(Key.COLUMN,
-                String.class);
+        List<String> userConfiguredColumns = Arrays.asList("*");
+//        List<String> userConfiguredColumns = originalConfig.getList(Key.COLUMN, String.class);
 
         if (isTableMode) {
             if (null == userConfiguredColumns
