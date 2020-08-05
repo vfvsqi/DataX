@@ -135,7 +135,6 @@ public class Engine {
         RUNTIME_MODE = cl.getOptionValue("mode");
 
         Configuration configuration = ConfigParser.parse(jobPath);
-
         long jobId;
         if (!"-1".equalsIgnoreCase(jobIdString)) {
             jobId = Long.parseLong(jobIdString);
@@ -171,7 +170,6 @@ public class Engine {
         engine.start(configuration);
     }
 
-
     /**
      * -1 表示未能解析到 jobId
      *
@@ -201,7 +199,22 @@ public class Engine {
     public static void main(String[] args) throws Exception {
         int exitCode = 0;
         try {
-            Engine.entry(args);
+//            String dataxhome = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main";
+//            System.setProperty("datax.home", dataxhome);
+//            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/testlinkoopdbreader.json";
+////            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/testmysql8reader.json";
+//            String[] argss = {"-mode", "standalone", "-jobid", "-1", "-job", jsonUrl};
+//            Engine.entry(argss);
+
+
+            String dataxhome = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main";
+            System.setProperty("datax.home", dataxhome);
+//            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/writelinkoopdb.json";
+            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/writemysql.json";
+            String[] argss = {"-mode", "standalone", "-jobid", "-1", "-job", jsonUrl};
+            Engine.entry(argss);
+
+//            Engine.entry(args);
         } catch (Throwable e) {
             exitCode = 1;
             LOG.error("\n\n经DataX智能分析,该任务最可能的错误原因是:\n" + ExceptionTracker.trace(e));
