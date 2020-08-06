@@ -6,6 +6,7 @@ import com.alibaba.datax.common.util.RetryUtil;
 import com.alibaba.datax.plugin.rdbms.reader.Key;
 import com.alibaba.druid.sql.parser.SQLParserUtils;
 import com.alibaba.druid.sql.parser.SQLStatementParser;
+import com.datapps.linkoopdb.jdbc.DatabaseType;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import org.apache.commons.lang3.StringUtils;
@@ -194,13 +195,14 @@ public final class DBUtil {
                 String[] params = grantRecord.split("\\`");
                 if (params != null && params.length >= 3) {
                     String tableName = params[3];
-                    if (params[0].contains("INSERT") && !tableName.equals("*") && tableNames.contains(tableName))
+                    if (params[0].contains("INSERT") && !tableName.equals("*") && tableNames.contains(tableName)) {
                         tableNames.remove(tableName);
+                    }
                 } else {
                     if (grantRecord.contains("INSERT") ||grantRecord.contains("ALL PRIVILEGES")) {
-                        if (grantRecord.contains("*.*"))
+                        if (grantRecord.contains("*.*")) {
                             return true;
-                        else if (grantRecord.contains(dbPattern)) {
+                        } else if (grantRecord.contains(dbPattern)) {
                             return true;
                         }
                     }
@@ -387,7 +389,8 @@ public final class DBUtil {
     private static synchronized Connection connect(DataBaseType dataBaseType,
                                                    String url, Properties prop) {
         try {
-            Class.forName(dataBaseType.getDriverClassName());
+            String className = dataBaseType.getDriverClassName();
+            Class.forName(className);
             DriverManager.setLoginTimeout(Constant.TIMEOUT_SECONDS);
             return DriverManager.getConnection(url, prop);
         } catch (Exception e) {
@@ -421,12 +424,13 @@ public final class DBUtil {
      */
     public static ResultSet query(Connection conn, String sql, int fetchSize, int queryTimeout)
             throws SQLException {
+
         // make sure autocommit is off
         conn.setAutoCommit(false);
         Statement stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY,
                 ResultSet.CONCUR_READ_ONLY);
         stmt.setFetchSize(fetchSize);
-        stmt.setQueryTimeout(queryTimeout);
+//        stmt.setQueryTimeout(queryTimeout);
         return query(stmt, sql);
     }
 

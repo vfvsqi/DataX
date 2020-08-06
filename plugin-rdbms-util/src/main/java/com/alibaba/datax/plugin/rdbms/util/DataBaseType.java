@@ -10,6 +10,9 @@ import java.util.regex.Pattern;
  * <p/>
  */
 public enum DataBaseType {
+    /**
+     *
+     */
     MySql("mysql", "com.mysql.jdbc.Driver"),
     Tddl("mysql", "com.mysql.jdbc.Driver"),
     DRDS("drds", "com.mysql.jdbc.Driver"),
@@ -19,7 +22,8 @@ public enum DataBaseType {
     RDBMS("rdbms", "com.alibaba.datax.plugin.rdbms.util.DataBaseType"),
     DB2("db2", "com.ibm.db2.jcc.DB2Driver"),
     ADS("ads","com.mysql.jdbc.Driver"),
-    ClickHouse("clickhouse", "ru.yandex.clickhouse.ClickHouseDriver");
+    ClickHouse("clickhouse", "ru.yandex.clickhouse.ClickHouseDriver"),
+    Linkoopdb("linkoopdb", "com.datapps.linkoopdb.jdbc.JdbcDriver");
 
 
     private String typeName;
@@ -58,6 +62,8 @@ public enum DataBaseType {
             case ClickHouse:
                 break;
             case RDBMS:
+                break;
+            case Linkoopdb:
                 break;
             default:
                 throw DataXException.asDataXException(DBUtilErrorCode.UNSUPPORTED_TYPE, "unsupported database type.");

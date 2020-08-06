@@ -422,12 +422,14 @@ public class Configuration {
 		}
 
 		List<T> result = new ArrayList<T>();
-
-		List<Object> origin = (List<Object>) object;
-		for (final Object each : origin) {
-			result.add((T) each);
+		if(object instanceof List) {
+			List<Object> origin = (List<Object>) object;
+			for (final Object each : origin) {
+				result.add((T) each);
+			}
+		} else {
+			result.add((T)object);
 		}
-
 		return result;
 	}
 

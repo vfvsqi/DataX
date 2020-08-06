@@ -44,7 +44,6 @@
         <module>common</module>
         <module>core</module>
         <module>transformer</module>
-
         <!-- reader -->
         <module>mysqlreader</module>
         <module>drdsreader</module>
@@ -67,6 +66,8 @@
         <module>opentsdbreader</module>
         <module>cassandrareader</module>
         <module>gdbreader</module>
+        <module>hbase20xsqlreader</module>
+        <module>linkoopdbreader</module>
 
         <!-- writer -->
         <module>mysqlwriter</module>
@@ -95,11 +96,12 @@
         <module>gdbwriter</module>
         <module>cassandrawriter</module>
         <module>clickhousewriter</module>
+        <module>hbase20xsqlwriter</module>
+        <module>linkoopdbwriter</module>
+
         <!-- common support module -->
         <module>plugin-rdbms-util</module>
         <module>plugin-unstructured-storage-util</module>
-        <module>hbase20xsqlreader</module>
-        <module>hbase20xsqlwriter</module>
     </modules>
 
     <dependencyManagement>

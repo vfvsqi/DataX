@@ -1,0 +1,6 @@
+{
+    "name": "linkoopdbreader",
+    "class": "com.alibaba.datax.plugin.reader.linkoopdbreader.LinkoopdbReader",
+    "description": "linkoopdb test",
+    "developer": "datapps"
+}
