@@ -6,7 +6,6 @@ import com.alibaba.datax.common.util.RetryUtil;
 import com.alibaba.datax.plugin.rdbms.reader.Key;
 import com.alibaba.druid.sql.parser.SQLParserUtils;
 import com.alibaba.druid.sql.parser.SQLStatementParser;
-import com.datapps.linkoopdb.jdbc.DatabaseType;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import org.apache.commons.lang3.StringUtils;

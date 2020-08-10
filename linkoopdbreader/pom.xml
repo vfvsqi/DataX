@@ -31,11 +31,27 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>com.alibaba.datax</groupId>
+			<artifactId>datax-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>com.alibaba.datax</groupId>
 			<artifactId>plugin-rdbms-util</artifactId>
 			<version>${datax-project-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.datapps.linkoop</groupId>
+			<artifactId>linkoopdb-jdbc</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.8</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 

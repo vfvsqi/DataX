@@ -5,10 +5,10 @@ import com.alibaba.datax.common.spi.Reader;
 import com.alibaba.datax.common.util.Configuration;
 import com.alibaba.datax.plugin.rdbms.reader.CommonRdbmsReader;
 import com.alibaba.datax.plugin.rdbms.reader.Constant;
+import com.alibaba.datax.plugin.rdbms.reader.Key;
 import com.alibaba.datax.plugin.rdbms.util.DataBaseType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.List;
 
 public class  LinkoopdbReader extends Reader {
@@ -33,6 +33,20 @@ public class  LinkoopdbReader extends Reader {
 		public void prepare() {
 			init();
 			this.commonRdbmsReaderJob.preCheck(this.originalConfig,DATABASE_TYPE);
+			saveDdl(this.originalConfig);
+		}
+
+		private void saveDdl(Configuration originalConfig) {
+			String driver = DATABASE_TYPE.getDriverClassName();
+			String jdbcurl = originalConfig.getString("connection[0].jdbcUrl");
+			String username = originalConfig.getString(Key.USERNAME);
+			String password = originalConfig.getString(Key.PASSWORD);
+			String table = originalConfig.getString("connection[0].table[0]");
+			String filePath = originalConfig.getString(com.alibaba.datax.plugin.reader.linkoopdbreader.Key.PATH);
+			String ddlFile = filePath + "/" + "ddl_" + table;
+			System.out.println(table + jdbcurl + ddlFile + driver + username + password);
+			System.out.println(originalConfig.beautify());
+			LinkoopDBUtils.saveDdlInfo(ddlFile, table, driver, jdbcurl, username, password);
 		}
 
 		@Override
