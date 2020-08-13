@@ -40,6 +40,13 @@
             <outputDirectory>datax</outputDirectory>
         </fileSet>
         <fileSet>
+            <directory>excelreader/target/datax/</directory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+            <outputDirectory>datax</outputDirectory>
+        </fileSet>
+        <fileSet>
             <directory>oceanbasereader/target/datax/</directory>
             <includes>
                 <include>**/*.*</include>
@@ -191,6 +198,13 @@
         </fileSet>
         <fileSet>
             <directory>linkoopdbwriter/target/datax/</directory>
+            <includes>
+                <include>**/*.*</include>
+            </includes>
+            <outputDirectory>datax</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>excelwriter/target/datax/</directory>
             <includes>
                 <include>**/*.*</include>
             </includes>

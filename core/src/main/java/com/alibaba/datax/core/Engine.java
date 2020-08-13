@@ -202,20 +202,10 @@ public class Engine {
             String dataxhome = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main";
             System.setProperty("datax.home", dataxhome);
 
-            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/linkoopdb2txtfile.json";
-
-//            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/testlinkoopdbreader.json";
-//            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/testmysql8reader.json";
+//            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/testmysql.json";
+            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/writeexcel.json";
             String[] argss = {"-mode", "standalone", "-jobid", "-1", "-job", jsonUrl};
             Engine.entry(argss);
-
-
-//            String dataxhome = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main";
-//            System.setProperty("datax.home", dataxhome);
-//            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/writelinkoopdb.json";
-////            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/writemysql.json";
-//            String[] argss = {"-mode", "standalone", "-jobid", "-1", "-job", jsonUrl};
-//            Engine.entry(argss);
 
 //            Engine.entry(args);
         } catch (Throwable e) {

@@ -54,6 +54,7 @@
 <!--        <module>otsreader</module>-->
 <!--        <module>otsstreamreader</module>-->
         <module>txtfilereader</module>
+        <module>excelwriter</module>
 <!--        <module>hdfsreader</module>-->
 <!--        <module>streamreader</module>-->
 <!--        <module>ossreader</module>-->
@@ -73,6 +74,7 @@
 <!--        <module>drdswriter</module>-->
 <!--        <module>odpswriter</module>-->
         <module>txtfilewriter</module>
+        <module>excelreader</module>
 <!--        <module>ftpwriter</module>-->
 <!--        <module>hdfswriter</module>-->
 <!--        <module>streamwriter</module>-->

@@ -1,0 +1,6 @@
+{
+    "name": "excelwriter",
+    "class": "com.alibaba.datax.plugin.writer.excelwriter.ExcelWriter",
+    "description": "use datax framework to write excel files",
+    "developer": "datapp"
+}

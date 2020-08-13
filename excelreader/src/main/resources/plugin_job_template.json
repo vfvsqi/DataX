@@ -1,0 +1,9 @@
+{
+    "name": "excelreader",
+    "parameter": {
+        "path": [],
+        "encoding": "",
+        "column": [],
+        "fieldDelimiter": ""
+    }
+}
