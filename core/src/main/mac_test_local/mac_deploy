@@ -1,0 +1,42 @@
+#!/bin/bash
+
+
+BIN_DIR="$( cd "$( dirname "$0"  )" && pwd  )"
+cd ../;
+#mkdir lib;
+BASE_DIR=` cd ${BIN_DIR}; cd ../../../../; pwd`
+LIB_DIR=` cd ${BIN_DIR}; cd ../lib; pwd `
+READER_DIR=` cd ${BIN_DIR}; cd ../plugin/reader; pwd `
+WRITER_DIR=` cd ${BIN_DIR}; cd ../plugin/writer; pwd `
+readers=("linkoopdbreader" "mysqlreader" "postgresqlreader" "txtfilereader" "excelreader")
+writers=('linkoopdbwriter' 'mysqlwriter' 'postgresqlwriter' 'txtfilewriter' 'excelwriter')
+
+source ~/.bash_profile
+mvn -U clean package assembly:assembly -Dmaven.test.skip=true
+
+readers_url='target/datax/plugin/reader'
+writers_url='target/datax/plugin/writer'
+echo ${READER_DIR}
+
+for var in ${readers[@]}
+do
+  cd ${BASE_DIR}/${var}/${readers_url}/${var}
+  ln -sf ` pwd ` ${READER_DIR}
+done
+
+for var in ${writers[@]}
+do
+  cd ${BASE_DIR}/${var}/${writers_url}/${var}
+  cp -R libs/* ${LIB_DIR}
+#  rm -rf libs
+  ln -sf ` pwd ` ${WRITER_DIR}
+done
+
+cd ${BASE_DIR}
+sudo find ./ -name ".DS_Store" -depth -exec rm -rf {} \;
+
+#readers=("linkoopdbreader" "mysqlreader" "postgresqlreader" "txtfilereader")
+#for var in ${readers[@]}
+#do
+#  echo ${var}
+#done

@@ -1,0 +1,45 @@
+{
+	"job": {
+		"setting": {
+			"speed": {
+				 "channel": 3
+			},
+			"errorLimit": {
+				"record": 0,
+				"percentage": 0.02
+			}
+		},
+		"content": [
+			{
+				"reader": {
+					"name": "mysqlreader",
+					"parameter": {
+						"username": "root",
+						"password": "123456",
+						"column": ["*"],
+						"splitPk": "",
+						"connection": [
+							{
+								"table": [
+									"LOCATED_SHARD"
+								],
+								"jdbcUrl": [
+	 "jdbc:mysql://192.168.1.93:3306/ldb_node235?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true"
+								]
+							}
+						]
+					}
+				},
+			   "writer": {
+				    "name": "txtfilewriter",
+					"parameter": {
+						"path": "./",
+						"fileName": "LOCATED_SHARD.csv",
+						"writeMode": "truncate",
+						"dateFormat": "yyyy-MM-dd"
+					}
+				}
+			}
+		]
+	}
+}

@@ -1,0 +1,34 @@
+{
+	"job": {
+		"setting": {
+			"speed": {
+				 "channel": 3
+			},
+			"errorLimit": {
+				"record": 0,
+				"percentage": 0.02
+			}
+		},
+		"content": [
+			{
+				"reader": {
+					"name": "txtfilereader",
+					"parameter": {
+						"path": "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/test.csv__2abe006d_bc1a_4093_a8cb_f5bd894403a7",
+						"column": ["*"],
+						"fieldDelimiter": ","
+					}
+				},
+			   "writer": {
+					"name": "excelwriter",
+					"parameter": {
+						"path": "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/",
+						"fileName": "exceltest.xlsx",
+						"writeMode": "truncate",
+						"dateFormat": "yyyy-MM-dd"
+					}
+				}
+			}
+		]
+	}
+}

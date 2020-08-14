@@ -1,0 +1,46 @@
+{
+	"job": {
+		"setting": {
+			"speed": {
+				 "channel": 3
+			},
+			"errorLimit": {
+				"record": 0,
+				"percentage": 0.02
+			}
+		},
+		"content": [
+			{
+				"reader": {
+					"name": "linkoopdbreader",
+					"parameter": {
+						"username": "admin",
+						"password": "123456",
+						"column": ["*"],
+						"fetchSize":5,
+						"path": "./file",
+						"connection": [
+							{
+								"table": [
+									"PUBLIC.TEST2"
+								],
+								"jdbcUrl": [
+	 "jdbc:linkoopdb:tcp://test91:9105/ldb;query_iterator=1"
+								]
+							}
+						]
+					}
+				},
+			   "writer": {
+				    "name": "txtfilewriter",
+					"parameter": {
+						"path": "./files",
+						"fileName": "linkoopdbtest.csv",
+						"writeMode": "truncate",
+						"dateFormat": "yyyy-MM-dd"
+					}
+				}
+			}
+		]
+	}
+}

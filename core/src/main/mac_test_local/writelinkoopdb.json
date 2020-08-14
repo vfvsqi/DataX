@@ -1,0 +1,43 @@
+{
+	"job": {
+		"setting": {
+			"speed": {
+				 "channel": 3
+			},
+			"errorLimit": {
+				"record": 0,
+				"percentage": 0.02
+			}
+		},
+		"content": [
+			{
+				"reader": {
+					"name": "txtfilereader",
+					"parameter": {
+						"path": "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/linkoopdbtest.csv__57456c6d_09ab_4cbc_8b5f_731d9f34a1a0",
+						"column": ["*"],
+						"fieldDelimiter": ","
+					}
+				},
+			   "writer": {
+					"name": "linkoopdbwriter",
+					"parameter": {
+						"writeMode": "insert",
+						"username": "admin",
+						"password": "123456",
+						"column": ["*"],
+					
+						"connection": [
+							{
+								"jdbcUrl": "jdbc:linkoopdb:tcp://test91:9105/ldb",
+								"table": [
+									"TESTTABLE2"
+								]
+							}
+						]
+					}
+				}
+			}
+		]
+	}
+}

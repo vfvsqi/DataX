@@ -199,15 +199,15 @@ public class Engine {
     public static void main(String[] args) throws Exception {
         int exitCode = 0;
         try {
-            String dataxhome = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main";
-            System.setProperty("datax.home", dataxhome);
+//            String dataxhome = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main";
+//            System.setProperty("datax.home", dataxhome);
+//
+////            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/testmysql.json";
+//            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/writeexcel.json";
+//            String[] argss = {"-mode", "standalone", "-jobid", "-1", "-job", jsonUrl};
+//            Engine.entry(argss);
 
-//            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/testmysql.json";
-            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/writeexcel.json";
-            String[] argss = {"-mode", "standalone", "-jobid", "-1", "-job", jsonUrl};
-            Engine.entry(argss);
-
-//            Engine.entry(args);
+            Engine.entry(args);
         } catch (Throwable e) {
             exitCode = 1;
             LOG.error("\n\n经DataX智能分析,该任务最可能的错误原因是:\n" + ExceptionTracker.trace(e));
