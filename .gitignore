@@ -130,7 +130,7 @@ venv.bak/
 /site
 .mypy_cache/
 .metadata
-bin/
+#bin/
 tmp/
 *.tmp
 *.bak
