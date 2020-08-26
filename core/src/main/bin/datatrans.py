@@ -56,7 +56,6 @@ def getFileWriterJson(indict):
     parameter['fileName'] = fileName
     parameter['path'] = path
     dict['parameter'] = parameter
-    print(dict)
     return dict
 
 
@@ -71,7 +70,6 @@ def getFileReaderJson(indict):
     parameter['fieldDelimiter'] = ','
     parameter['path'] = path
     dict['parameter'] = parameter
-    print(dict)
     return dict
 
 
@@ -102,7 +100,6 @@ def getDbWriterJson(indict):
     parameter['connection'] = contention
 
     dict['parameter'] = parameter
-    print(dict)
     return dict
 
 
@@ -133,7 +130,6 @@ def getDbReaderJson(indict):
     parameter['connection'] = contention
 
     dict['parameter'] = parameter
-    print(dict)
     return dict
 
 
@@ -147,7 +143,6 @@ def createTable():
     list.append("-cp")
     list.append(CLASS_PATH)
     list.append(mainName)
-    print CLASS_PATH
     return list
 
 
@@ -209,26 +204,30 @@ def readerprop(prop):
 
 def getArgs(readerdict, writerdict):
     list = []
+    files = ['txtfile', 'excel']
     list.append(readerdict[ldb_url])
     list.append(readerdict[ldb_user])
     list.append(readerdict[ldb_pass])
     list.append(readerdict[ldb_table])
-    list.append(writerdict[ldb_url])
-    list.append(writerdict[ldb_user])
-    list.append(writerdict[ldb_pass])
-    list.append(writerdict[ldb_type])
-    list.append(writerdict[ldb_table])
+    writeType = writerdict[ldb_type]
+    list.append(writeType)
+    if writeType in files:
+        list.append(writerdict[ldb_file])
+    else:
+        list.append(writerdict[ldb_url])
+        list.append(writerdict[ldb_user])
+        list.append(writerdict[ldb_pass])
+        list.append(writerdict[ldb_table])
     return list
 
 
 def anaTableList(readerdict, writerdict):
     readerType = readerdict[ldb_type]
     writeType = writerdict[ldb_type]
-    files = ['txtfile', 'excel', 'linkoopdb']
-    if readerType == "linkoopdb" and writeType not in files:
+    dbname = 'linkoopdb'
+    if readerType == dbname and writeType != dbname:
         args = getArgs(readerdict, writerdict)
         command = createTable() + args
-        print command
         p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output, err = p.communicate(b"input data that is passed to subprocess' stdin")
         if err.strip('\r\n ') != "":
@@ -244,7 +243,6 @@ def getJson(readerdict, writerdict, tables):
     tmp = tables.split(',')
     if len(tmp) != 2:
         return ""
-    print tables
     readerName = tmp[0]
     writeName = tmp[1]
     dbs = ['linkoopdb', 'mysql', 'postgresql', 'oracle']
@@ -255,10 +253,11 @@ def getJson(readerdict, writerdict, tables):
     writerjson = {}
     saveFileName = readertype
 
-    otherfile = ['txtfile', 'excel', 'linkoopdb']
-    if readertype == "linkoopdb" and writertype not in otherfile:
+    dbname = 'linkoopdb'
+    if readertype == dbname and writertype != dbname:
         readerdict[ldb_table] = readerName
         writerdict[ldb_table] = writeName
+        writerdict[ldb_file] = writeName
         saveFileName += '_' + readerName
         saveFileName += '_' + writeName
 

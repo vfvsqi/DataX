@@ -30,7 +30,7 @@ public class TransEnums {
             } else if (PostgreSQL.getTypeName().equals(value)) {
                 return PostgreSQL;
             } else {
-                throw Error.runtimeError(201, "DatabaseType");
+                return null;
             }
         }
 

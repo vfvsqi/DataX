@@ -25,14 +25,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * Created by zzp .
@@ -259,7 +257,6 @@ public class ExcelWriter extends Writer {
             LOG.info("end do split.");
             return writerSplitConfigs;
         }
-
     }
 
     public static class Task extends Writer.Task {

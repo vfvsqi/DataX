@@ -33,7 +33,6 @@ public class CreateTable {
             // 删除 dblink
             deleteLink(linkName);
         }
-
         return "";
     }
 
