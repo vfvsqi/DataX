@@ -11,6 +11,7 @@ WRITER_DIR=` cd ${BIN_DIR}; cd ../plugin/writer; pwd `
 readers=("linkoopdbreader" "mysqlreader" "postgresqlreader" "txtfilereader" "excelreader")
 writers=('linkoopdbwriter' 'mysqlwriter' 'postgresqlwriter' 'txtfilewriter' 'excelwriter')
 
+cd ${BASE_DIR}
 source ~/.bash_profile
 mvn -U clean package assembly:assembly -Dmaven.test.skip=true
 

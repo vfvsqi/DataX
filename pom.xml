@@ -101,6 +101,7 @@
 
         <!-- common support module -->
         <module>plugin-rdbms-util</module>
+        <module>plugin-linkoopdb-util</module>
         <module>plugin-unstructured-storage-util</module>
         <module>hbase20xsqlwriter</module>
         <module>hbase20xsqlreader</module>
