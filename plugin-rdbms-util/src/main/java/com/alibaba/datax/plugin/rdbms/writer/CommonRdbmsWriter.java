@@ -514,7 +514,13 @@ public class CommonRdbmsWriter {
                     break;
 
                 case Types.BOOLEAN:
-                    preparedStatement.setString(columnIndex + 1, column.asString());
+                    String str = column.asString();
+                    if (isNumber(str)) {
+                        preparedStatement.setLong(columnIndex + 1, column.asLong());
+                    } else {
+                        preparedStatement.setString(columnIndex + 1, column.asString());
+                    }
+//                    preparedStatement.setString(columnIndex + 1, column.asString());
                     break;
 
                 // warn: bit(1) -> Types.BIT 可使用setBoolean
@@ -540,6 +546,15 @@ public class CommonRdbmsWriter {
                                                     .get(columnIndex)));
             }
             return preparedStatement;
+        }
+
+        private static boolean isNumber(String str) {
+            for (int i = 0; i < str.length(); i++) {
+                if (!Character.isDigit(str.charAt(i))) {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void calcWriteRecordSql() {
