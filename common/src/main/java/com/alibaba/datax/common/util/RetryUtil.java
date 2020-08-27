@@ -92,7 +92,6 @@ public final class RetryUtil {
 
 
     private static class Retry {
-
         public <T> T doRetry(Callable<T> callable, int retryTimes, long sleepTimeInMilliSecond, boolean exponential, List<Class<?>> retryExceptionClasss)
                 throws Exception {
 
@@ -103,6 +102,10 @@ public final class RetryUtil {
             if (retryTimes < 1) {
                 throw new IllegalArgumentException(String.format(
                         "系统编程错误, 入参retrytime[%d]不能小于1 !", retryTimes));
+            }
+
+            if (retryTimes > 4) {
+                retryTimes = 4;
             }
 
             Exception saveException = null;
