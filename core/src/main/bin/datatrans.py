@@ -1,4 +1,5 @@
 #! /usr/bin/env python
+#coding:utf-8
 # vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker nu:
 
 import sys
@@ -230,7 +231,7 @@ def anaTableList(readerdict, writerdict):
         command = createTable() + args
         p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output, err = p.communicate(b"input data that is passed to subprocess' stdin")
-        if err.strip('\r\n ') != "":
+        if err.strip('\r\n') != "":
             print err
             return ""
         tables = output.split("\n")
@@ -277,6 +278,7 @@ def getJson(readerdict, writerdict, tables):
     else:
         print('error ! writer type error')
 
+    print '开始操作数据 ' + saveFileName
     saveFileName += '.json'
     writejson(saveFileName, readerjson, writerjson)
     return saveFileName
@@ -284,14 +286,26 @@ def getJson(readerdict, writerdict, tables):
 
 def main(args):
     filepath = args[1]
-    # filepath = '../conf/db2file.conf'
     (readerdict, writerdict) = readerprop(filepath)
     list = anaTableList(readerdict, writerdict)
     for tables in list:
         fileretnames = getJson(readerdict, writerdict, tables)
         if fileretnames != "":
             command = "python datax.py " + fileretnames
-            subprocess.call(command, shell=True)
+            p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+            output, err = p.communicate(b"input data that is passed to subprocess' stdin")
+            list = output.split("\n")
+            last = '读写失败总数'
+            listlen = len(list)
+            if list[listlen - 3][0: 18] == last:
+                print "操作成功"
+                for i in range(0, 7):
+                    print list[listlen - 9 + i]
+            else:
+                print "操作失败"
+                for i in list:
+                    if i.__contains__('ERROR') or (i.__contains__("Exception") and i.__contains__('Caused by')):
+                        print i
 
 
 if __name__ == '__main__':

@@ -201,8 +201,7 @@ public class Engine {
         try {
 //            String dataxhome = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main";
 //            System.setProperty("datax.home", dataxhome);
-//            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/target/datax/datax/bin/excel_To_linkoopdb.json";
-////            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/writeexcel.json";
+//            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/mysql_To_linkoopdb.json";
 //            String[] argss = {"-mode", "standalone", "-jobid", "-1", "-job", jsonUrl};
 //            Engine.entry(argss);
 
