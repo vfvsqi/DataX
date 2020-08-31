@@ -509,8 +509,15 @@ public class CommonRdbmsWriter {
                 case Types.VARBINARY:
                 case Types.BLOB:
                 case Types.LONGVARBINARY:
-                    preparedStatement.setBytes(columnIndex + 1, column
-                            .asBytes());
+                    if (column.getType().equals(Column.Type.BOOL)) {
+                        preparedStatement.setBoolean(columnIndex + 1, column
+                                .asBoolean());
+                    } else {
+                        preparedStatement.setBytes(columnIndex + 1, column
+                                .asBytes());
+                    }
+//                    preparedStatement.setBytes(columnIndex + 1, column
+//                            .asBytes());
                     break;
 
                 case Types.BOOLEAN:

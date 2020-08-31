@@ -8,8 +8,8 @@ BASE_DIR=` cd ${BIN_DIR}; cd ../../../../; pwd`
 LIB_DIR=` cd ${BIN_DIR}; cd ../lib; pwd `
 READER_DIR=` cd ${BIN_DIR}; cd ../plugin/reader; pwd `
 WRITER_DIR=` cd ${BIN_DIR}; cd ../plugin/writer; pwd `
-readers=("linkoopdbreader" "mysqlreader" "postgresqlreader" "txtfilereader" "excelreader")
-writers=('linkoopdbwriter' 'mysqlwriter' 'postgresqlwriter' 'txtfilewriter' 'excelwriter')
+readers=("linkoopdbreader" "mysqlreader" "postgresqlreader" "txtfilereader" "excelreader" "oraclereader")
+writers=('linkoopdbwriter' 'mysqlwriter' 'postgresqlwriter' 'txtfilewriter' 'excelwriter' 'oraclewriter')
 
 cd ${BASE_DIR}
 source ~/.bash_profile

@@ -1,7 +1,4 @@
 package com.alibaba.datax.plugin.linkoopdb.enums;
-
-import com.datapps.linkoopdb.jdbc.error.Error;
-
 public class TransEnums {
 
     public enum DataBaseType {

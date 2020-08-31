@@ -19,16 +19,16 @@ public class Application {
 //        }
 
 //        args = new String[9];
-//        args[0] = "jdbc:linkoopdb:tcp://test91:9105/ldb;query_iterator=1";
+//        args[0] = "jdbc:linkoopdb:tcp://192.168.1.91:9105/ldb;query_iterator=1";
 //        args[1] = "admin";
 //        args[2] = "123456";
-//        args[3] = "TEST";
-//
-////        args[4] = "mysql";
-////        args[5] = "jdbc:mysql://192.168.1.93:3306/testtrans";
-////        args[6] = "ldb";
-////        args[7] = "123456";
-////        args[8] = "DATAX_INSERT_TEST1";
+//        args[3] = "DATATRANS";
+////
+//        args[4] = "oracle";
+//        args[5] = "jdbc:oracle:thin:@192.168.1.72:1521:xe";
+//        args[6] = "linkoopdb";
+//        args[7] = "123456";
+//        args[8] = "DATAX_INSERT_TEST1";
 //        args[4] = "excel";
 //        args[5] = "test.xlsx";
 
@@ -39,7 +39,10 @@ public class Application {
 //            String ret = "入参有误，入参应按照 linkoopdb url,username,password,table, 异构数据库类型,url,user,pass,table 这个顺序来";
 //            throw new Exception(ret);
 //        }
+        trans(args);
+    }
 
+    public static void trans(String[] args) {
         DBConnectInfo linkoopdb = new DBConnectInfo();
         DBConnectInfo otherDb = new DBConnectInfo();
         linkoopdb.setUrl(args[0]);
@@ -78,7 +81,7 @@ public class Application {
             // 创建 dblink
             String linkName = dbType.toUpperCase() + "_LINK_TEST";
             otherDb.setTableName(args[8]);
-
+            otherDb.setDbType(driver);
             CreateTable createTable = new CreateTable();
             createTable.createTableInOtherDatabase(linkoopdb, otherDb, linkName);
         }

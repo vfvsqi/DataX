@@ -49,7 +49,7 @@
 <!--        <module>drdsreader</module>-->
 <!--        <module>sqlserverreader</module>-->
         <module>postgresqlreader</module>
-<!--        <module>oraclereader</module>-->
+        <module>oraclereader</module>
 <!--        <module>odpsreader</module>-->
 <!--        <module>otsreader</module>-->
 <!--        <module>otsstreamreader</module>-->
@@ -79,7 +79,7 @@
 <!--        <module>hdfswriter</module>-->
 <!--        <module>streamwriter</module>-->
 <!--        <module>otswriter</module>-->
-<!--        <module>oraclewriter</module>-->
+        <module>oraclewriter</module>
 <!--        <module>sqlserverwriter</module>-->
         <module>postgresqlwriter</module>
 <!--        <module>osswriter</module>-->
@@ -103,8 +103,8 @@
         <module>plugin-rdbms-util</module>
         <module>plugin-linkoopdb-util</module>
         <module>plugin-unstructured-storage-util</module>
-        <module>hbase20xsqlwriter</module>
-        <module>hbase20xsqlreader</module>
+<!--        <module>hbase20xsqlwriter</module>-->
+<!--        <module>hbase20xsqlreader</module>-->
 
     </modules>
 

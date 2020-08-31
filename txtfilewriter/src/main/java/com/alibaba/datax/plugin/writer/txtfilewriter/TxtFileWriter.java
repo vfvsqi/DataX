@@ -234,14 +234,19 @@ public class TxtFileWriter extends Writer {
                 Configuration splitedTaskConfig = this.writerSliceConfig
                         .clone();
 
-                String fullFileName = null;
-                fileSuffix = UUID.randomUUID().toString().replace('-', '_');
-                fullFileName = String.format("%s__%s", filePrefix, fileSuffix);
+                String fullFileName = filePrefix;
                 while (allFiles.contains(fullFileName)) {
-                    fileSuffix = UUID.randomUUID().toString().replace('-', '_');
-                    fullFileName = String.format("%s__%s", filePrefix,
-                            fileSuffix);
+                    fullFileName = filePrefix;
                 }
+
+//                String fullFileName = null;
+//                fileSuffix = UUID.randomUUID().toString().replace('-', '_');
+//                fullFileName = String.format("%s__%s", filePrefix, fileSuffix);
+//                while (allFiles.contains(fullFileName)) {
+//                    fileSuffix = UUID.randomUUID().toString().replace('-', '_');
+//                    fullFileName = String.format("%s__%s", filePrefix,
+//                            fileSuffix);
+//                }
                 allFiles.add(fullFileName);
 
                 splitedTaskConfig

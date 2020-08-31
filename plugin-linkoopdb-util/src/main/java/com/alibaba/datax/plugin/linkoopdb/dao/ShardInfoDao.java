@@ -23,12 +23,12 @@ public class ShardInfoDao {
     }
 
     public List<SchemaAndTableName> getList(String schemaName) {
-        String sql = "select table_schema, table_name from information_schema.constraint_table_usage";
+        String sql = "select TABLE_SCHEM, table_name from information_schema.system_tables";
         List<SchemaAndTableName> ret;
         if (null == schemaName || schemaName.equals("")) {
             ret = LinkoopDBUtils.getList(SchemaAndTableName.class, sql);
         } else {
-            sql = sql + " where CONSTRAINT_SCHEMA = ?";
+            sql = sql + " where TABLE_SCHEM = ?";
             ret = LinkoopDBUtils.getList(SchemaAndTableName.class, sql, schemaName);
         }
         return ret;

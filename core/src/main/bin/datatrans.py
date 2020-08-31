@@ -87,7 +87,8 @@ def getDbWriterJson(indict):
     parameter['password'] = password
     parameter['column'] = []
     parameter['column'].append("*")
-    parameter['writeMode'] = 'insert'
+    if type == 'mysql':
+        parameter['writeMode'] = 'insert'
 
     table = []
     table.append(tablename)
@@ -303,9 +304,9 @@ def main(args):
                     print list[listlen - 9 + i]
             else:
                 print "操作失败"
-                for i in list:
-                    if i.__contains__('ERROR') or (i.__contains__("Exception") and i.__contains__('Caused by')):
-                        print i
+                # for i in list:
+                #     if i.__contains__('ERROR') or (i.__contains__("Exception") and i.__contains__('Caused by')):
+                #         print i
 
 
 if __name__ == '__main__':

@@ -4,7 +4,11 @@ import com.alibaba.datax.plugin.linkoopdb.dao.ShardInfoDao;
 import com.alibaba.datax.plugin.linkoopdb.entity.DBConnectInfo;
 import com.alibaba.datax.plugin.linkoopdb.entity.SchemaAndTableName;
 import com.alibaba.datax.plugin.linkoopdb.entity.ShowCreateTable;
+import com.alibaba.datax.plugin.linkoopdb.enums.TransEnums;
 import com.alibaba.datax.plugin.linkoopdb.util.LinkoopDBUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CreateTable {
@@ -20,11 +24,15 @@ public class CreateTable {
                 createTable(linkName, tableName, otherDb.getTableName());
                 System.out.println(tableName + "," + otherDb.getTableName());
             } else {
+
                 List<SchemaAndTableName> list = shardInfoDao.getList(tableName);
                 for (SchemaAndTableName schemaAndTableName : list) {
                     String tmpTableName = schemaAndTableName.getTable_name();
-                    createTable(linkName, schemaAndTableName.getTable_schema() + "." +  tmpTableName, tmpTableName);
-                    System.out.println(tableName + "." + tmpTableName + "," + tmpTableName);
+//                    List<String> lists = Arrays.asList(new String[]{"DATA_TYPE_TEST13"});
+//                    if (!lists.contains(tmpTableName)) {
+                        createTable(linkName, schemaAndTableName.getTable_schem() + "." +  tmpTableName, tmpTableName);
+                        System.out.println(tableName + "." + tmpTableName + "," + tmpTableName);
+//                    }
                 }
             }
         } catch (Exception e) {
@@ -56,7 +64,16 @@ public class CreateTable {
     }
 
     public static void createLink(String linkName, DBConnectInfo otherDb) {
-        String createLink = "CREATE DATABASE LINK " + linkName + " CONNECT TO '" + otherDb.getUsername() + "' IDENTIFIED BY '" + otherDb.getPassword() + "' USING '" + otherDb.getUrl() + "' PROPERTIES ('caseSensitive':'true');";
+        TransEnums.DataBaseType dbType = otherDb.getDbType();
+        String createLink = "CREATE DATABASE LINK " + linkName + " CONNECT TO '" + otherDb.getUsername() + "' IDENTIFIED BY '" + otherDb.getPassword() + "' USING '" + otherDb.getUrl() + "'";
+//        if (dbType.equals(TransEnums.DataBaseType.MySql)) {
+//            createLink += "' PROPERTIES ('caseSensitive':'true'" + ");";
+//        } else if (dbType.equals(TransEnums.DataBaseType.Oracle)) {
+//            createLink += "' PROPERTIES ('caseSensitive':'true'" + ");";
+//        } else if (dbType.equals(TransEnums.DataBaseType.PostgreSQL)) {
+//            createLink += "' PROPERTIES ('maxActive':'10'" + ");";
+//        }
+        System.out.println(createLink);
         LinkoopDBUtils.createTable(createLink);
     }
 
