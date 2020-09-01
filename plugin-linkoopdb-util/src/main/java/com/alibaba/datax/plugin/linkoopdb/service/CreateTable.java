@@ -6,9 +6,6 @@ import com.alibaba.datax.plugin.linkoopdb.entity.SchemaAndTableName;
 import com.alibaba.datax.plugin.linkoopdb.entity.ShowCreateTable;
 import com.alibaba.datax.plugin.linkoopdb.enums.TransEnums;
 import com.alibaba.datax.plugin.linkoopdb.util.LinkoopDBUtils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CreateTable {
@@ -21,7 +18,7 @@ public class CreateTable {
             String tableName = linkoopdb.getTableName();
             String[] tmp = tableName.split("\\.");
             if (tmp.length == 2) {
-                createTable(linkName, tableName, otherDb.getTableName());
+                createTable(linkName, tableName, otherDb.getTableName(), otherDb.getDbType());
                 System.out.println(tableName + "," + otherDb.getTableName());
             } else {
 
@@ -30,7 +27,7 @@ public class CreateTable {
                     String tmpTableName = schemaAndTableName.getTable_name();
 //                    List<String> lists = Arrays.asList(new String[]{"DATA_TYPE_TEST13"});
 //                    if (!lists.contains(tmpTableName)) {
-                        createTable(linkName, schemaAndTableName.getTable_schem() + "." +  tmpTableName, tmpTableName);
+                        createTable(linkName, schemaAndTableName.getTable_schem() + "." +  tmpTableName, tmpTableName, otherDb.getDbType());
                         System.out.println(tableName + "." + tmpTableName + "," + tmpTableName);
 //                    }
                 }
@@ -51,15 +48,23 @@ public class CreateTable {
         LinkoopDBUtils.init(linkoopdb);
     }
 
-    public void createTable(String linkName, String tableName, String otherTableName) {
+    public void createTable(String linkName, String tableName, String otherTableName, TransEnums.DataBaseType dbType) {
         String linkDbTableName = linkName + "." + otherTableName;
         ShardInfoDao shardInfoDao = new ShardInfoDao();
         ShowCreateTable showCreateTable = shardInfoDao.getShowTable(tableName);
         String sql = showCreateTable.getCreate_table();
         int head = sql.indexOf("(");
         int tail = sql.lastIndexOf(")");
-        String inner = sql.substring(head + 1, tail);
+        String inner = sql.substring(head + 1, tail).toUpperCase();
+
+        if (dbType.equals(TransEnums.DataBaseType.Oracle)){
+            if (inner.contains("BOOLEAN")) {
+                inner = inner.replaceAll("BOOLEAN", "INT");
+            }
+        }
+
         String createTalbe = "create table " + linkDbTableName + " (" + inner + ")";
+        System.out.println(createTalbe);
         LinkoopDBUtils.createTable(createTalbe);
     }
 

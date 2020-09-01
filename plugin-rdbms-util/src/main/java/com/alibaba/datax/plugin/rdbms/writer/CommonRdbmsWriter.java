@@ -17,6 +17,9 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -435,7 +438,15 @@ public class CommonRdbmsWriter {
                     if (emptyAsNull && "".equals(strValue)) {
                         preparedStatement.setString(columnIndex + 1, null);
                     } else {
-                        preparedStatement.setString(columnIndex + 1, strValue);
+                        if (this.dataBaseType == DataBaseType.Oracle) {
+                            if ("true".equals(strValue)) {
+                                preparedStatement.setInt(columnIndex + 1, 1);
+                            } else {
+                                preparedStatement.setInt(columnIndex + 1, 0);
+                            }
+                        } else {
+                            preparedStatement.setString(columnIndex + 1, strValue);
+                        }
                     }
                     break;
 
@@ -468,7 +479,11 @@ public class CommonRdbmsWriter {
                         }
 
                         if (null != utilDate) {
-                            sqlDate = new java.sql.Date(utilDate.getTime());
+                            if (this.dataBaseType.equals(DataBaseType.MySql)) {
+                                sqlDate = new java.sql.Date(utilDate.getTime() +  (1000 * 60 * 60 * 24));
+                            } else {
+                                sqlDate = new java.sql.Date(utilDate.getTime());
+                            }
                         }
                         preparedStatement.setDate(columnIndex + 1, sqlDate);
                     }
@@ -510,14 +525,21 @@ public class CommonRdbmsWriter {
                 case Types.BLOB:
                 case Types.LONGVARBINARY:
                     if (column.getType().equals(Column.Type.BOOL)) {
-                        preparedStatement.setBoolean(columnIndex + 1, column
-                                .asBoolean());
+                        byte[] bytes = new byte[1];
+                        if (column.asBoolean()) {
+                            bytes[0] = '1';
+                        } else {
+                            bytes[0] = '0';
+                        }
+//                        preparedStatement.setBoolean(columnIndex + 1, column
+//                                .asBoolean());
+                        preparedStatement.setBytes(columnIndex + 1, bytes);
+
                     } else {
                         preparedStatement.setBytes(columnIndex + 1, column
                                 .asBytes());
                     }
-//                    preparedStatement.setBytes(columnIndex + 1, column
-//                            .asBytes());
+
                     break;
 
                 case Types.BOOLEAN:
@@ -536,7 +558,14 @@ public class CommonRdbmsWriter {
                     if (this.dataBaseType == DataBaseType.MySql) {
                         preparedStatement.setBoolean(columnIndex + 1, column.asBoolean());
                     } else {
-                        preparedStatement.setString(columnIndex + 1, column.asString());
+                        byte[] bytes = new byte[1];
+                        if (column.asString().equals("true")) {
+                            bytes[0] = '1';
+                        } else {
+                            bytes[0] = '0';
+                        }
+//                        preparedStatement.setString(columnIndex + 1, column.asString());
+                        preparedStatement.setBytes(columnIndex + 1, bytes);
                     }
                     break;
                 default:

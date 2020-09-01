@@ -238,7 +238,10 @@ def anaTableList(readerdict, writerdict):
         tables = output.split("\n")
         return tables
     else:
-        return readerType + "," + writeType
+        list = []
+        str = readerType + "," + writeType
+        list.append(str)
+        return list
 
 
 def getJson(readerdict, writerdict, tables):
@@ -285,16 +288,28 @@ def getJson(readerdict, writerdict, tables):
     return saveFileName
 
 
-def main(args):
+def file_to_ldb_test(args):
     filepath = args[1]
     (readerdict, writerdict) = readerprop(filepath)
+    schema = writerdict[ldb_table]
+    name = 'DATA_TYPE_TEST'
+    for i in range(1, 19):
+        str = './excel/' + name + i.__str__() + '_test.xlsx'
+        readerdict[ldb_path] = str
+        writerdict[ldb_table] = schema + '.' + name + i.__str__()
+        trans(readerdict, writerdict)
+
+
+def trans(readerdict, writerdict):
     list = anaTableList(readerdict, writerdict)
     for tables in list:
         fileretnames = getJson(readerdict, writerdict, tables)
         if fileretnames != "":
             command = "python datax.py " + fileretnames
-            p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+            p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                 shell=True)
             output, err = p.communicate(b"input data that is passed to subprocess' stdin")
+            print output
             list = output.split("\n")
             last = '读写失败总数'
             listlen = len(list)
@@ -307,6 +322,13 @@ def main(args):
                 # for i in list:
                 #     if i.__contains__('ERROR') or (i.__contains__("Exception") and i.__contains__('Caused by')):
                 #         print i
+
+
+def main(args):
+    # file_to_ldb_test(args)
+    filepath = args[1]
+    (readerdict, writerdict) = readerprop(filepath)
+    trans(readerdict, writerdict)
 
 
 if __name__ == '__main__':

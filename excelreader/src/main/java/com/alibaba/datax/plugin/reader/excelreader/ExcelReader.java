@@ -12,6 +12,7 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.*;
@@ -378,7 +379,9 @@ public class ExcelReader extends Reader {
 				LOG.info(String.format("reading file : [%s]", fileName));
 				Workbook workbook = null;
 				try {
-					workbook = WorkbookFactory.create(new File(fileName));
+					FileInputStream fis = new FileInputStream(fileName);
+					workbook = new XSSFWorkbook(fis);
+//					workbook = WorkbookFactory.create(new File(fileName));
 					for(Sheet sheet: workbook) {
 						for (Row row: sheet) {
 							Record record = recordSender.createRecord();
@@ -410,7 +413,7 @@ public class ExcelReader extends Reader {
 					String message = String.format("读取文件异常 : [%s]", fileName);
 					LOG.error(message);
 					throw DataXException.asDataXException(ExcelReaderErrorCode.READ_FILE_IO_ERROR, message);
-				} catch (InvalidFormatException e) {
+				} catch (Exception e) {
 					String message = String.format("读取文件权限异常 : [%s]", fileName);
 					LOG.error(message);
 					throw DataXException.asDataXException(ExcelReaderErrorCode.SECURITY_NOT_ENOUGH, message);

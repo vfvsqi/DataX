@@ -29,8 +29,8 @@ public class InsertLinkoopdbDatasTest {
 
     private static void createLinkoopdbTables(String[] args) {
 
-//        String url = "jdbc:linkoopdb:tcp://test91:9105/ldb;query_iterator=1";
-        String url = "jdbc:linkoopdb:tcp://192.168.1.82:9105/ldb;query_iterator=1";
+        String url = "jdbc:linkoopdb:tcp://test91:9105/ldb;query_iterator=1";
+//        String url = "jdbc:linkoopdb:tcp://192.168.1.82:9105/ldb;query_iterator=1";
 
         String driver = "com.datapps.linkoopdb.jdbc.JdbcDriver";
         String username = "admin";
@@ -45,6 +45,8 @@ public class InsertLinkoopdbDatasTest {
         String sql6 = create("data_type_test6", "info float");
         String sql7 = create("data_type_test7", "info decimal");
         String sql8 = create("data_type_test8", "info numeric");
+
+        // mysql 数据类型会有问题 少一天 已经手动加一天了
         String sql9 = create("data_type_test9", "info date");
         String sql10 = create("data_type_test10", "info timestamp");
         String sql11 = create("data_type_test11", "info varchar(128)");
@@ -145,10 +147,11 @@ public class InsertLinkoopdbDatasTest {
     }
 
     public static String create(String tableName, String type) {
+        String schema = "DATATRANS";
 //        String createsql = "CREATE TABLE IF NOT EXISTS datatrans." + tableName + "(" + type + ")";
-        String createsql = "CREATE TABLE IF NOT EXISTS datatrans." + tableName + "(" + type + ") engine pallas;";
+        String createsql = "CREATE TABLE IF NOT EXISTS " + schema + "." + tableName + "(" + type + ") engine pallas;";
         LinkoopDBUtils.createTable(createsql);
-        String sql  = "insert into datatrans." + tableName + " values(?);";
+        String sql  = "insert into " + schema + "." + tableName + " values(?);";
         return sql;
     }
 
