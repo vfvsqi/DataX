@@ -544,11 +544,16 @@ public class CommonRdbmsWriter {
 
                 case Types.BOOLEAN:
                     String str = column.asString();
-                    if (isNumber(str)) {
-                        preparedStatement.setLong(columnIndex + 1, column.asLong());
+                    if (null == str) {
+                        preparedStatement.setString(columnIndex + 1, null);
                     } else {
-                        preparedStatement.setString(columnIndex + 1, column.asString());
+                        if (isNumber(str)) {
+                            preparedStatement.setLong(columnIndex + 1, column.asLong());
+                        } else {
+                            preparedStatement.setString(columnIndex + 1, column.asString());
+                        }
                     }
+
 //                    preparedStatement.setString(columnIndex + 1, column.asString());
                     break;
 
@@ -557,15 +562,23 @@ public class CommonRdbmsWriter {
                 case Types.BIT:
                     if (this.dataBaseType == DataBaseType.MySql) {
                         preparedStatement.setBoolean(columnIndex + 1, column.asBoolean());
+                    } else if (this.dataBaseType == DataBaseType.PostgreSQL){
+                        preparedStatement.setBoolean(columnIndex + 1, column.asBoolean());
                     } else {
                         byte[] bytes = new byte[1];
-                        if (column.asString().equals("true")) {
-                            bytes[0] = '1';
+                        String info = column.asString();
+                        if (null == info) {
+                            preparedStatement.setBytes(columnIndex + 1, null);
                         } else {
-                            bytes[0] = '0';
+                            if (info.equals("true")) {
+                                bytes[0] = '1';
+                            } else {
+                                bytes[0] = '0';
+                            }
+                            preparedStatement.setBytes(columnIndex + 1, bytes);
                         }
+
 //                        preparedStatement.setString(columnIndex + 1, column.asString());
-                        preparedStatement.setBytes(columnIndex + 1, bytes);
                     }
                     break;
                 default:
