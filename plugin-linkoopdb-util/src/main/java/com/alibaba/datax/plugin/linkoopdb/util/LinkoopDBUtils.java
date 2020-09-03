@@ -114,7 +114,7 @@ public class LinkoopDBUtils {
             while (resultSet.next()) {
                 String temp = resultSet.getString(1);
             }
-
+            connection.commit();
             LinkoopDBUtils.closeConnection(connection, resultSet, null);
             statement.close();
 

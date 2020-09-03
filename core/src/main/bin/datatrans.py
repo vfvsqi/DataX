@@ -258,6 +258,8 @@ def getJson(readerdict, writerdict, tables):
     writerjson = {}
     saveFileName = readertype
 
+    logs = '开始操作数据 读取类型为 ' + readertype + ', 写入类型为 ' + writertype
+
     dbname = 'linkoopdb'
     if readertype == dbname and writertype != dbname:
         readerdict[ldb_table] = readerName
@@ -267,8 +269,10 @@ def getJson(readerdict, writerdict, tables):
         saveFileName += '_' + writeName
 
     if readertype in dbs:
+        logs += ", 读取表 " + readerdict[ldb_table]
         readerjson = getDbReaderJson(readerdict)
     elif readertype in files:
+        logs += ", 读取文件 " + readerdict[ldb_file]
         readerjson = getFileReaderJson(readerdict)
     else:
         print('error ! reader type error')
@@ -276,13 +280,16 @@ def getJson(readerdict, writerdict, tables):
     saveFileName += '_To_' + writertype
 
     if writertype in dbs:
+        logs += ", 写入表 " + writerdict[ldb_table]
         writerjson = getDbWriterJson(writerdict)
     elif writertype in files:
+        logs += ", 写入文件 " + writerdict[ldb_file]
         writerjson = getFileWriterJson(writerdict)
     else:
         print('error ! writer type error')
 
-    print '开始操作数据 ' + saveFileName
+    # print '开始操作数据 ' + saveFileName
+    print logs
     saveFileName += '.json'
     writejson(saveFileName, readerjson, writerjson)
     return saveFileName
@@ -309,12 +316,15 @@ def trans(readerdict, writerdict):
             p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                  shell=True)
             output, err = p.communicate(b"input data that is passed to subprocess' stdin")
-            print output
+            # print output
             list = output.split("\n")
             last = '读写失败总数'
             listlen = len(list)
+            if len(list[listlen - 3]) < 17 :
+                return "操作失败"
             if list[listlen - 3][0: 18] == last:
                 print "操作成功"
+                os.remove(fileretnames)
                 for i in range(0, 7):
                     print list[listlen - 9 + i]
             else:
