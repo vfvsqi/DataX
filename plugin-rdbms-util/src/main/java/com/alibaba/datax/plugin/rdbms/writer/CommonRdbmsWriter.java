@@ -563,33 +563,17 @@ public class CommonRdbmsWriter {
                 // warn: bit(>1) -> Types.VARBINARY 可使用setBytes
                 case Types.BIT:
                     String bool = column.asString();
-                    if (bool.equals("true")) {
-                        preparedStatement.setBoolean(columnIndex + 1, true);
-                    } else if (bool.equals("false")) {
-                        preparedStatement.setBoolean(columnIndex + 1, false);
+                    if (null == bool) {
+                        preparedStatement.setBytes(columnIndex + 1, null);
                     } else {
-                        preparedStatement.setBoolean(columnIndex + 1, column.asBoolean());
+                        if (bool.equals("true") || bool.equals("1")) {
+                            preparedStatement.setBoolean(columnIndex + 1, true);
+                        } else if (bool.equals("false") || bool.equals("0")) {
+                            preparedStatement.setBoolean(columnIndex + 1, false);
+                        } else {
+                            preparedStatement.setBoolean(columnIndex + 1, column.asBoolean());
+                        }
                     }
-//                    if (this.dataBaseType == DataBaseType.MySql) {
-//
-//                    } else if (this.dataBaseType == DataBaseType.PostgreSQL){
-//                        preparedStatement.setBoolean(columnIndex + 1, column.asBoolean());
-//                    } else {
-//                        byte[] bytes = new byte[1];
-//                        String info = column.asString();
-//                        if (null == info) {
-//                            preparedStatement.setBytes(columnIndex + 1, null);
-//                        } else {
-//                            if (info.equals("true")) {
-//                                bytes[0] = '1';
-//                            } else {
-//                                bytes[0] = '0';
-//                            }
-//                            preparedStatement.setBytes(columnIndex + 1, bytes);
-//                        }
-//
-////                        preparedStatement.setString(columnIndex + 1, column.asString());
-//                    }
                     break;
                 default:
                     throw DataXException

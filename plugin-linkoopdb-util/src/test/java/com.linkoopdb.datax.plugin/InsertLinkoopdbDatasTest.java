@@ -1,6 +1,5 @@
 package com.linkoopdb.datax.plugin;
 
-import com.alibaba.datax.plugin.linkoopdb.util.DataTransUtils;
 import com.alibaba.datax.plugin.linkoopdb.util.LinkoopDBUtils;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -55,6 +54,8 @@ public class InsertLinkoopdbDatasTest {
         // hdfs 不支持 clob
         String sql14 = create("data_type_test14", "info clob");
         String sql15 = create("data_type_test15", "info bit(1)");
+//        String sql15 = create("data_type_test15", "info bit");
+
         // hdfs 不支持 blob
         String sql16 = create("data_type_test16", "info blob");
         String sql17 = create("data_type_test17", "info binary(255)");
@@ -83,8 +84,8 @@ public class InsertLinkoopdbDatasTest {
             PreparedStatement statement18 = connection.prepareStatement(sql18);
 
             java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-            String test = "aaa";
-            byte[] bytes = DataTransUtils.toByteArray(test);
+            String test = "hello world";
+            byte[] bytes = test.getBytes();
             int i = 1;
             statement1.setInt(i, 1);
             statement2.setInt(i, 2);
@@ -100,28 +101,48 @@ public class InsertLinkoopdbDatasTest {
             statement12.setObject(i, "s");
             statement13.setBoolean(i, true);
             statement14.setString(i, "14");
-            statement15.setByte(i, bytes[0]);
+//            statement15.setBoolean(i, true);
+            statement15.setBoolean(i, false);
             statement16.setBytes(i, bytes);
             statement17.setBytes(i, bytes);
             statement18.setBytes(i, bytes);
-            ret = statement1.executeUpdate();
-            ret = statement2.executeUpdate();
-            ret = statement3.executeUpdate();
-            ret = statement4.executeUpdate();
-            ret = statement5.executeUpdate();
-            ret = statement6.executeUpdate();
-            ret = statement7.executeUpdate();
-            ret = statement8.executeUpdate();
-            ret = statement9.executeUpdate();
-            ret = statement10.executeUpdate();
-            ret = statement11.executeUpdate();
-            ret = statement12.executeUpdate();
-            ret = statement13.executeUpdate();
-            ret = statement14.executeUpdate();
+
+//            statement1.setInt(i, 1);
+//            statement2.setInt(i, 2);
+//            statement3.setInt(i, 3);
+//            statement4.setDouble(i, 4.5);
+//            statement5.setDouble(i, 5.5);
+//            statement6.setFloat(i, 6.5f);
+//            statement7.setBigDecimal(i, null);
+//            statement8.setInt(i, 8);
+//            statement9.setDate(i, null);
+//            statement10.setTimestamp(i, null);
+//            statement11.setString(i, null);
+//            statement12.setObject(i, null);
+//            statement13.setBoolean(i, false);
+//            statement14.setString(i, null);
+//            statement15.setByte(i, bytes[0]);
+//            statement16.setBytes(i, null);
+//            statement17.setBytes(i, null);
+//            statement18.setBytes(i, null);
+//            ret = statement1.executeUpdate();
+//            ret = statement2.executeUpdate();
+//            ret = statement3.executeUpdate();
+//            ret = statement4.executeUpdate();
+//            ret = statement5.executeUpdate();
+//            ret = statement6.executeUpdate();
+//            ret = statement7.executeUpdate();
+//            ret = statement8.executeUpdate();
+//            ret = statement9.executeUpdate();
+//            ret = statement10.executeUpdate();
+//            ret = statement11.executeUpdate();
+//            ret = statement12.executeUpdate();
+//            ret = statement13.executeUpdate();
+//            ret = statement14.executeUpdate();
             ret = statement15.executeUpdate();
-            ret = statement16.executeUpdate();
-            ret = statement17.executeUpdate();
-            ret = statement18.executeUpdate();
+//            ret = statement16.executeUpdate();
+//            ret = statement17.executeUpdate();
+//            ret = statement18.executeUpdate();
             LinkoopDBUtils.closeConnection(connection, null, statement1);
             LinkoopDBUtils.closeConnection(connection, null, statement2);
             LinkoopDBUtils.closeConnection(connection, null, statement3);

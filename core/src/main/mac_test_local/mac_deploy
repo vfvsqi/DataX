@@ -33,11 +33,12 @@ do
   ln -sf ` pwd ` ${WRITER_DIR}
 done
 
+cp ${BASE_DIR}/plugin-linkoopdb-util/target/plugin-linkoopdb-util-0.0.1-SNAPSHOT.jar ${BASE_DIR}/target/datax/datax/lib/
+
 cd ${BASE_DIR}
 sudo find ./ -name ".DS_Store" -depth -exec rm -rf {} \;
 
-#readers=("linkoopdbreader" "mysqlreader" "postgresqlreader" "txtfilereader")
-#for var in ${readers[@]}
-#do
-#  echo ${var}
-#done
+cd ${BASE_DIR}/target/datax
+tar -czf linkoopdb_trans.tar.gz datax
+scp ./linkoopdb_trans.tar.gz auxo@192.168.1.133:/home/auxo/share-site/dist/linkoopdb-tools/2.3.0
+

@@ -201,8 +201,8 @@ public class Engine {
         try {
 //            String dataxhome = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main";
 //            System.setProperty("datax.home", dataxhome);
-//            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main/bin/txtfile_To_linkoopdb.json";
-////            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/target/datax/datax/bin/linkoopdb_DATATRANS.DATA_TYPE_TEST18_DATA_TYPE_TEST18_To_oracle.json";
+//            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/datax/bin/postgresql_To_linkoopdb.json";
+////            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/datax/bin/linkoopdb_DATATRANS.DATA_TYPE_TEST15_DATA_TYPE_TEST15_To_postgresql.json";
 //            String[] argss = {"-mode", "standalone", "-jobid", "-1", "-job", jsonUrl};
 //            Engine.entry(argss);
 
