@@ -60,17 +60,22 @@ public class Application {
             String tableName = linkoopdb.getTableName();
             String[] tmp = tableName.split("\\.");
             String fileName = args[5];
+            if (dbType.equals("txtfile")) {
+                fileName = ".txt";
+            } else if (dbType.equals("excel")) {
+                fileName = ".xlsx";
+            }
 
             if (tmp.length == 1) {
                 ShardInfoDao shardInfoDao = new ShardInfoDao();
                 List<SchemaAndTableName> list = shardInfoDao.getList(tableName);
                 for (SchemaAndTableName schemaAndTableName : list) {
                     String tmpTableName = schemaAndTableName.getTable_name();
-                    String name = tmpTableName + "_" + fileName;
+                    String name = tmpTableName + fileName;
                     System.out.println(tableName + "." + tmpTableName + "," + name);
                 }
             } else {
-                String name = tableName + "_" + fileName;
+                String name = tableName + fileName;
                 System.out.println(tableName + "," + name);
             }
         } else {

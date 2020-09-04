@@ -272,7 +272,7 @@ def getJson(readerdict, writerdict, tables):
         logs += ", 读取表 " + readerdict[ldb_table]
         readerjson = getDbReaderJson(readerdict)
     elif readertype in files:
-        logs += ", 读取文件 " + readerdict[ldb_file]
+        logs += ", 读取文件 " + readerdict[ldb_path]
         readerjson = getFileReaderJson(readerdict)
     else:
         print('error ! reader type error')
@@ -283,7 +283,7 @@ def getJson(readerdict, writerdict, tables):
         logs += ", 写入表 " + writerdict[ldb_table]
         writerjson = getDbWriterJson(writerdict)
     elif writertype in files:
-        logs += ", 写入文件 " + writerdict[ldb_file]
+        logs += ", 写入文件 " + writerdict[ldb_path] + '/' + writerdict[ldb_file]
         writerjson = getFileWriterJson(writerdict)
     else:
         print('error ! writer type error')

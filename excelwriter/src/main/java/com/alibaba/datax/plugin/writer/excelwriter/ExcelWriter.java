@@ -13,18 +13,12 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.PrefixFileFilter;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -280,7 +274,36 @@ public class ExcelWriter extends Writer {
         public void prepare() {
 
         }
-
+//        public static Object toObject (byte[] bytes) {
+//            Object obj = null;
+//            try {
+//                ByteArrayInputStream bis = new ByteArrayInputStream (bytes);
+//                ObjectInputStream ois = new ObjectInputStream (bis);
+//                obj = ois.readObject();
+//                ois.close();
+//                bis.close();
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            } catch (ClassNotFoundException ex) {
+//                ex.printStackTrace();
+//            }
+//            return obj;
+//        }
+    public static String trimnull(String string) throws UnsupportedEncodingException {
+        ArrayList<Byte> list = new ArrayList<Byte>();
+        byte[] bytes = string.getBytes("UTF-8");
+        for(int i=0;bytes!=null&&i<bytes.length;i++){
+            if(0!=bytes[i]){
+                list.add(bytes[i]);
+            }
+        }
+        byte[] newbytes = new byte[list.size()];
+        for(int i = 0 ; i<list.size();i++){
+            newbytes[i]=(Byte) list.get(i);
+        }
+        String str = new String(newbytes,"UTF-8");
+        return str;
+    }
         @Override
         public void startWrite(RecordReceiver lineReceiver) {
             LOG.info("begin do write...");
@@ -306,7 +329,11 @@ public class ExcelWriter extends Writer {
                             if (null != column.getRawData()) {
                                 boolean isDateColumn = column instanceof DateColumn;
                                 if (!isDateColumn) {
-                                    value = column.asString();
+//                                    if (column instanceof BytesColumn) {
+//                                        value = column.asString();
+//                                    } else {
+                                        value = column.asString();
+//                                    }
                                 } else {
                                     if (null != dateParse) {
                                         value = dateParse.format(column.asDate());
@@ -315,6 +342,7 @@ public class ExcelWriter extends Writer {
                                     }
                                 }
                             }
+                            value = trimnull(value);
                             row.createCell(i).setCellValue(value);
                         }
                     }

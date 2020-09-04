@@ -516,6 +516,8 @@ public class CommonRdbmsWriter {
                     if (null != utilDate) {
                         sqlTimestamp = new java.sql.Timestamp(
                                 utilDate.getTime());
+                    } else if (this.dataBaseType.equals(DataBaseType.MySql)) {
+                        sqlTimestamp = new java.sql.Timestamp(0);
                     }
                     preparedStatement.setTimestamp(columnIndex + 1, sqlTimestamp);
                     break;
