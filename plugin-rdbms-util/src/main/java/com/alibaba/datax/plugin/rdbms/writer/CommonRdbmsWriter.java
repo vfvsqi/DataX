@@ -562,26 +562,34 @@ public class CommonRdbmsWriter {
                 // warn: bit(1) -> Types.BIT 可使用setBoolean
                 // warn: bit(>1) -> Types.VARBINARY 可使用setBytes
                 case Types.BIT:
-                    if (this.dataBaseType == DataBaseType.MySql) {
-                        preparedStatement.setBoolean(columnIndex + 1, column.asBoolean());
-                    } else if (this.dataBaseType == DataBaseType.PostgreSQL){
-                        preparedStatement.setBoolean(columnIndex + 1, column.asBoolean());
+                    String bool = column.asString();
+                    if (bool.equals("true")) {
+                        preparedStatement.setBoolean(columnIndex + 1, true);
+                    } else if (bool.equals("false")) {
+                        preparedStatement.setBoolean(columnIndex + 1, false);
                     } else {
-                        byte[] bytes = new byte[1];
-                        String info = column.asString();
-                        if (null == info) {
-                            preparedStatement.setBytes(columnIndex + 1, null);
-                        } else {
-                            if (info.equals("true")) {
-                                bytes[0] = '1';
-                            } else {
-                                bytes[0] = '0';
-                            }
-                            preparedStatement.setBytes(columnIndex + 1, bytes);
-                        }
-
-//                        preparedStatement.setString(columnIndex + 1, column.asString());
+                        preparedStatement.setBoolean(columnIndex + 1, column.asBoolean());
                     }
+//                    if (this.dataBaseType == DataBaseType.MySql) {
+//
+//                    } else if (this.dataBaseType == DataBaseType.PostgreSQL){
+//                        preparedStatement.setBoolean(columnIndex + 1, column.asBoolean());
+//                    } else {
+//                        byte[] bytes = new byte[1];
+//                        String info = column.asString();
+//                        if (null == info) {
+//                            preparedStatement.setBytes(columnIndex + 1, null);
+//                        } else {
+//                            if (info.equals("true")) {
+//                                bytes[0] = '1';
+//                            } else {
+//                                bytes[0] = '0';
+//                            }
+//                            preparedStatement.setBytes(columnIndex + 1, bytes);
+//                        }
+//
+////                        preparedStatement.setString(columnIndex + 1, column.asString());
+//                    }
                     break;
                 default:
                     throw DataXException
