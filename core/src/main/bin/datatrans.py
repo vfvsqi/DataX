@@ -233,7 +233,7 @@ def anaTableList(readerdict, writerdict):
         p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output, err = p.communicate(b"input data that is passed to subprocess' stdin")
         if err.strip('\r\n') != "":
-            print err
+            print "服务异常"
             return ""
         tables = output.split("\n")
         return tables
