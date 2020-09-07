@@ -117,8 +117,8 @@ public class UnstructuredStorageReaderUtil {
 		// compress logic
 		try {
 			if (null == compress) {
-				reader = new BufferedReader(new InputStreamReader(inputStream,
-						encoding), bufferSize);
+				InputStreamReader in = new InputStreamReader(inputStream, encoding);
+				reader = new BufferedReader(in, bufferSize);
 			} else {
 				// TODO compress
 				if ("lzo_deflate".equalsIgnoreCase(compress)) {
@@ -272,6 +272,15 @@ public class UnstructuredStorageReaderUtil {
 
 		// every line logic
 		try {
+//			String line;
+//			try {
+//				while ((line=reader.readLine()) != null) {
+//					System.out.println("---------------> :" + line);
+//				}
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+
 			// TODO lineDelimiter
 			if (skipHeader) {
 				String fetchLine = reader.readLine();

@@ -479,11 +479,12 @@ public class CommonRdbmsWriter {
                         }
 
                         if (null != utilDate) {
-                            if (this.dataBaseType.equals(DataBaseType.MySql)) {
-                                sqlDate = new java.sql.Date(utilDate.getTime() +  (1000 * 60 * 60 * 24));
-                            } else {
-                                sqlDate = new java.sql.Date(utilDate.getTime());
-                            }
+                            sqlDate = new java.sql.Date(utilDate.getTime());
+//                            if (this.dataBaseType.equals(DataBaseType.MySql)) {
+//                                sqlDate = new java.sql.Date(utilDate.getTime() +  (1000 * 60 * 60 * 24));
+//                            } else {
+//
+//                            }
                         }
                         preparedStatement.setDate(columnIndex + 1, sqlDate);
                     }
@@ -514,11 +515,16 @@ public class CommonRdbmsWriter {
                     }
 
                     if (null != utilDate) {
-                        sqlTimestamp = new java.sql.Timestamp(
-                                utilDate.getTime());
-                    } else if (this.dataBaseType.equals(DataBaseType.MySql)) {
-                        sqlTimestamp = new java.sql.Timestamp(0);
+                        sqlTimestamp = new java.sql.Timestamp(utilDate.getTime());
+                        if (this.dataBaseType.equals(DataBaseType.Linkoopdb) && utilDate.getTime() == 0) {
+                            sqlTimestamp = null;
+                        }
+                    } else {
+                        if (this.dataBaseType.equals(DataBaseType.MySql)) {
+                            sqlTimestamp = new java.sql.Timestamp(0);
+                        }
                     }
+
                     preparedStatement.setTimestamp(columnIndex + 1, sqlTimestamp);
                     break;
 
