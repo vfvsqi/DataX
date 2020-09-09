@@ -50,8 +50,7 @@ public class TxtFileWriter extends Writer {
             if (null != dateFormatOld) {
                 LOG.warn("您使用format配置日期格式化, 这是不推荐的行为, 请优先使用dateFormat配置项, 两项同时存在则使用dateFormat.");
             }
-            UnstructuredStorageWriterUtil
-                    .validateParameter(this.writerSliceConfig);
+            UnstructuredStorageWriterUtil.validateParameter(this.writerSliceConfig);
         }
 
         private void validateParameter() {

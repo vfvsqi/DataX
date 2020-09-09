@@ -472,7 +472,11 @@ public class CommonRdbmsWriter {
                     } else {
                         java.sql.Date sqlDate = null;
                         try {
-                            utilDate = column.asDate();
+                            if (!"null".equals(column.asString())) {
+                                utilDate = column.asDate();
+                            } else {
+                                utilDate = null;
+                            }
                         } catch (DataXException e) {
                             throw new SQLException(String.format(
                                     "Date 类型转换错误：[%s]", column));
@@ -480,11 +484,6 @@ public class CommonRdbmsWriter {
 
                         if (null != utilDate) {
                             sqlDate = new java.sql.Date(utilDate.getTime());
-//                            if (this.dataBaseType.equals(DataBaseType.MySql)) {
-//                                sqlDate = new java.sql.Date(utilDate.getTime() +  (1000 * 60 * 60 * 24));
-//                            } else {
-//
-//                            }
                         }
                         preparedStatement.setDate(columnIndex + 1, sqlDate);
                     }
@@ -508,7 +507,11 @@ public class CommonRdbmsWriter {
                 case Types.TIMESTAMP:
                     java.sql.Timestamp sqlTimestamp = null;
                     try {
-                        utilDate = column.asDate();
+                        if ("null".equals(column.asString())) {
+                            utilDate = null;
+                        } else {
+                            utilDate = column.asDate();
+                        }
                     } catch (DataXException e) {
                         throw new SQLException(String.format(
                                 "TIMESTAMP 类型转换错误：[%s]", column));
