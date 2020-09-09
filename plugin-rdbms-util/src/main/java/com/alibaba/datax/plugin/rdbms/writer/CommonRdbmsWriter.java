@@ -435,7 +435,7 @@ public class CommonRdbmsWriter {
                 case Types.REAL:
                 case Types.DOUBLE:
                     String strValue = column.asString();
-                    if (emptyAsNull && "".equals(strValue)) {
+                    if (emptyAsNull && ("".equals(strValue) || "null".equals(strValue))) {
                         preparedStatement.setString(columnIndex + 1, null);
                     } else {
                         if (this.dataBaseType == DataBaseType.Oracle) {
