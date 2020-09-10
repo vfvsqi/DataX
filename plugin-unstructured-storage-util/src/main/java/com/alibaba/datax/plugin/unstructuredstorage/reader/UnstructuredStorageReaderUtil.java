@@ -13,7 +13,6 @@ import org.apache.commons.beanutils.BeanUtils;
 import io.airlift.compress.snappy.SnappyCodec;
 import io.airlift.compress.snappy.SnappyFramedInputStream;
 import org.anarres.lzo.*;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.compress.compressors.CompressorInputStream;
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
@@ -363,14 +362,7 @@ public class UnstructuredStorageReaderUtil {
 				if (columnValue.equals(nullFormat)) {
 					columnGenerated = new StringColumn(null);
 				} else {
-//					columnGenerated = new StringColumn(columnValue);
-					if ("null".equals(columnValue)) {
-						columnGenerated = new StringColumn(columnValue);
-					} else {
-						byte[] barr = Base64.decodeBase64(columnValue);
-						String info = new String(barr);
-						columnGenerated = new StringColumn(info);
-					}
+					columnGenerated = new StringColumn(columnValue);
 				}
 				record.addColumn(columnGenerated);
 			}

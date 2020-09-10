@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import com.alibaba.datax.common.element.StringColumn;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.compress.compressors.CompressorOutputStream;
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
@@ -309,22 +307,17 @@ public class UnstructuredStorageWriterUtil {
                 for (int i = 0; i < recordLength; i++) {
                     column = record.getColumn(i);
                     if (null != column.getRawData()) {
-                        String temp = column.asString();
-                        byte[] bytes = temp.getBytes();
-                        String encoded = Base64.encodeBase64String(bytes);
-                        splitedRows.add(encoded);
-
-//                        boolean isDateColumn = column instanceof DateColumn;
-//                        if (!isDateColumn) {
-//                            splitedRows.add(column.asString());
-//                        } else {
-//                            if (null != dateParse) {
-//                                splitedRows.add(dateParse.format(column
-//                                        .asDate()));
-//                            } else {
-//                                splitedRows.add(column.asString());
-//                            }
-//                        }
+                        boolean isDateColumn = column instanceof DateColumn;
+                        if (!isDateColumn) {
+                            splitedRows.add(column.asString());
+                        } else {
+                            if (null != dateParse) {
+                                splitedRows.add(dateParse.format(column
+                                        .asDate()));
+                            } else {
+                                splitedRows.add(column.asString());
+                            }
+                        }
                     } else {
                         // warn: it's all ok if nullFormat is null
                         splitedRows.add(nullFormat);
