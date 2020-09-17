@@ -17,6 +17,7 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -422,10 +423,8 @@ public class CommonRdbmsWriter {
                 case Types.LONGVARCHAR:
                 case Types.NVARCHAR:
                 case Types.LONGNVARCHAR:
-                    preparedStatement.setString(columnIndex + 1, column
-                            .asString());
+                    preparedStatement.setString(columnIndex + 1, column.asString());
                     break;
-
                 case Types.SMALLINT:
                 case Types.INTEGER:
                 case Types.BIGINT:
@@ -435,14 +434,16 @@ public class CommonRdbmsWriter {
                 case Types.REAL:
                 case Types.DOUBLE:
                     String strValue = column.asString();
-                    if (emptyAsNull && ("".equals(strValue) || "null".equals(strValue))) {
+                    if (emptyAsNull && ("".equals(strValue) || null == strValue || "null".equals(strValue))) {
                         preparedStatement.setString(columnIndex + 1, null);
                     } else {
                         if (this.dataBaseType == DataBaseType.Oracle) {
                             if ("true".equals(strValue)) {
-                                preparedStatement.setInt(columnIndex + 1, 1);
+                                preparedStatement.setDouble(columnIndex + 1, 1);
+                            } else if ("false".equals(strValue)) {
+                                preparedStatement.setDouble(columnIndex + 1, 0);
                             } else {
-                                preparedStatement.setInt(columnIndex + 1, 0);
+                                preparedStatement.setDouble(columnIndex + 1, Double.valueOf(strValue));
                             }
                         } else {
                             preparedStatement.setString(columnIndex + 1, strValue);
