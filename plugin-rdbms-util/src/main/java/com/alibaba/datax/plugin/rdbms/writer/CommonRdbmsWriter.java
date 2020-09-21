@@ -423,7 +423,11 @@ public class CommonRdbmsWriter {
                 case Types.LONGVARCHAR:
                 case Types.NVARCHAR:
                 case Types.LONGNVARCHAR:
-                    preparedStatement.setString(columnIndex + 1, column.asString());
+                    String tmp = column.asString();
+                    if (null != tmp) {
+                        tmp = tmp.trim();
+                    }
+                    preparedStatement.setString(columnIndex + 1, tmp);
                     break;
                 case Types.SMALLINT:
                 case Types.INTEGER:
