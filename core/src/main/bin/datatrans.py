@@ -30,7 +30,6 @@ def writejson(saveFileName, readerjson, writerjson):
     setting['speed'] = speed
     setting['errorLimit'] = errorLimit
 
-
     contents = []
     content = {}
     content['reader'] = readerjson
@@ -233,8 +232,9 @@ def anaTableList(readerdict, writerdict):
         p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output, err = p.communicate(b"input data that is passed to subprocess' stdin")
         if err.strip('\r\n') != "":
-            print "服务异常"
-            return ""
+            print err
+            # print "服务异常"
+            # return ""
         tables = output.split("\n")
         return tables
     else:
@@ -310,28 +310,31 @@ def file_to_ldb_test(args):
 def trans(readerdict, writerdict):
     list = anaTableList(readerdict, writerdict)
     for tables in list:
-        fileretnames = getJson(readerdict, writerdict, tables)
-        if fileretnames != "":
-            command = "python datax.py " + fileretnames
-            p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                                 shell=True)
-            output, err = p.communicate(b"input data that is passed to subprocess' stdin")
-            # print output
-            list = output.split("\n")
-            last = '读写失败总数'
-            listlen = len(list)
-            if len(list[listlen - 3]) < 17 :
-                return "操作失败"
-            if list[listlen - 3][0: 18] == last:
-                print "操作成功"
-                os.remove(fileretnames)
-                for i in range(0, 7):
-                    print list[listlen - 9 + i]
-            else:
-                print "操作失败"
-                # for i in list:
-                #     if i.__contains__('ERROR') or (i.__contains__("Exception") and i.__contains__('Caused by')):
-                #         print i
+        if ('error ：' in tables):
+            print tables
+        else :
+            fileretnames = getJson(readerdict, writerdict, tables)
+            if fileretnames != "":
+                command = "python datax.py " + fileretnames
+                p = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                     shell=True)
+                output, err = p.communicate(b"input data that is passed to subprocess' stdin")
+                # print output
+                list = output.split("\n")
+                last = '读写失败总数'
+                listlen = len(list)
+                if len(list[listlen - 3]) < 17 :
+                    return "操作失败"
+                if list[listlen - 3][0: 18] == last:
+                    print "操作成功"
+                    os.remove(fileretnames)
+                    for i in range(0, 7):
+                        print list[listlen - 9 + i]
+                else:
+                    print "操作失败"
+                    # for i in list:
+                    #     if i.__contains__('ERROR') or (i.__contains__("Exception") and i.__contains__('Caused by')):
+                    #         print i
 
 
 def main(args):

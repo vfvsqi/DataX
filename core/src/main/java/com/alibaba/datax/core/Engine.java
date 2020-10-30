@@ -202,7 +202,7 @@ public class Engine {
 //            String dataxhome = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/core/src/main";
 //            System.setProperty("datax.home", dataxhome);
 ////            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/datax/bin/postgresql_To_linkoopdb.json";
-//            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/datax/bin/linkoopdb_DATATRANS.DATA_TYPE_TEST16_DATA_TYPE_TEST16_To_oracle.json";
+//            String jsonUrl = "/Users/vzhzhq/Documents/work/code/DataX-Linkoopdb/datax/bin/linkoopdb_DATA_TRANSACTION.DATA_TRANS_TEST_3_DATA_TRANS_TEST_3_To_oracle.json";
 //            String[] argss = {"-mode", "standalone", "-jobid", "-1", "-job", jsonUrl};
 //            Engine.entry(argss);
 

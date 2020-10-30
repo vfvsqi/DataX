@@ -19,20 +19,19 @@ public class Application {
 //        }
 
 //        args = new String[9];
-//        args[0] = "jdbc:linkoopdb:tcp://192.168.1.91:9105/ldb;query_iterator=1";
+//        args[0] = "jdbc:linkoopdb:tcp://192.168.1.92:9105/ldb";
 //        args[1] = "admin";
 //        args[2] = "123456";
-//        args[3] = "DATATRANS";
-////
-//        args[4] = "oracle";
-//        args[5] = "jdbc:oracle:thin:@192.168.1.72:1521:xe";
-//        args[6] = "linkoopdb";
+//        args[3] = "TESTINDEX";
+//        args[4] = "mysql";
+//
+//        args[5] = "jdbc:mysql://192.168.1.72:3306/testtrans?useSSL=false&serverTimezone=Asia/Shanghai";
+//        args[6] = "ldb";
 //        args[7] = "123456";
-//        args[8] = "DATAX_INSERT_TEST1";
+//        args[8] = "DATA_TYPE_TEST14";
+
 //        args[4] = "excel";
 //        args[5] = "test.xlsx";
-
-
 //        jdbc:postgresql://192.168.1.72:5432/postgres postgres 123456
 
 //        if (args.length > 5) {
@@ -86,7 +85,7 @@ public class Application {
             otherDb.setUsername(args[6]);
             otherDb.setPassword(args[7]);
             // 创建 dblink
-            String linkName = dbType.toUpperCase() + "_LINK_TEST";
+            String linkName = dbType.toUpperCase() + "_" + System.currentTimeMillis();
             otherDb.setTableName(args[8]);
             otherDb.setDbType(driver);
             CreateTable createTable = new CreateTable();

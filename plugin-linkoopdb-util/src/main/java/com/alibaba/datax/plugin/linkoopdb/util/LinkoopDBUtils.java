@@ -1,7 +1,6 @@
 package com.alibaba.datax.plugin.linkoopdb.util;
 
 import com.alibaba.datax.plugin.linkoopdb.entity.DBConnectInfo;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -142,13 +141,18 @@ public class LinkoopDBUtils {
     }
 
 
-    public static boolean delete(String sql, String... args) {
+    public static boolean checkIfMysqlTableExists(String sql, String... args) {
         boolean ret = false;
         Connection connection = LinkoopDBUtils.getConnection();
         try {
             PreparedStatement statement = LinkoopDBUtils.getStatement(connection, sql, args);
-            ret = statement.execute();
-
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String res = resultSet.getString(1);
+                if (!res.isEmpty()) {
+                    ret = true;
+                }
+            }
             LinkoopDBUtils.closeConnection(connection, null, statement);
 
         } catch (Exception e) {
@@ -294,63 +298,6 @@ public class LinkoopDBUtils {
                     boolean str = (boolean)method.invoke(object);
                     statement.setBoolean(num, str);
                 }
-
-//                System.out.println(statement.get);
-//                System.out.println(" +++++++  " + str);
-//                Object info = null;
-//                System.out.println("--------------------------------------");
-//                System.out.println("------------------" + str + "--------------------");
-//
-//                if (null != str) {
-//                    info = str;
-//                } else if ("".equals(str)) {
-//                    System.out.println("这里");
-//                } else if ("" == str) {
-//                    System.out.println("nali");
-//                } else if (null == str) {
-//                    System.out.println("null");
-//                } else {
-//                    System.out.println("什么玩意儿");
-//                    str.getClass();
-//                }
-//                    statement.setObject(i + 1, info);
-//                Type type = method.getAnnotatedReturnType().getType();
-//                if (type.getClass().isInstance(str)) {
-//                    System.out.println("吼吼");
-//                    System.out.println(type.getClass().getName());
-//                } else {
-//                    System.out.println(type.getTypeName());
-//                }
-
-//                String para = field.getType().getName();
-//                if (para.contains(".")) {
-//                    String[] tmp = para.split("\\.");
-//                    para = tmp[tmp.length - 1];
-//                }
-//                String stateName = "set" + para.substring(0, 1).toUpperCase() + para.substring(1, para.length());//获取属性名
-//                if (stateName.equals("setChar")) {
-//                    stateName = "setString";
-//                }
-//                Class<?> clss = statement.getClass().getInterfaces()[0];
-//                Method[] m = clss.getMethods();
-//                Class<?> fieldCLass = field.getType();
-//                if (fieldCLass.equals(char.class)) {
-//                    fieldCLass = java.lang.String.class;
-//                }
-//                System.out.println(" +++++++  " + fieldCLass);
-
-//                if (fieldCLass.isInstance(str)) {
-//                    System.out.println("_______" + fieldCLass.getName());
-//                }
-//                Object t1 = fieldCLass.(str);
-//                System.out.println(t);
-//                t.invoke(i + 1, fieldCLass.cast(str));
-//                statement.getClass().getSuperclass().getDeclaredMethod(stateName).invoke(i + 1, (int)str);
-
-//                statement.set
-//                Class<?> stateClz = statement.getClass();
-//                Method stateMod = stateClz.getDeclaredMethod()
-
             }
             ret = statement.executeUpdate();
         } catch (Exception e) {

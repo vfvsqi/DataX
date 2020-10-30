@@ -28,8 +28,7 @@ public class InsertLinkoopdbDatasTest {
 
     private static void createLinkoopdbTables(String[] args) {
 
-        String url = "jdbc:linkoopdb:tcp://test91:9105/ldb;query_iterator=1";
-//        String url = "jdbc:linkoopdb:tcp://192.168.1.82:9105/ldb;query_iterator=1";
+        String url = "jdbc:linkoopdb:tcp://192.168.1.92:9105/ldb";
 
         String driver = "com.datapps.linkoopdb.jdbc.JdbcDriver";
         String username = "admin";
@@ -51,7 +50,7 @@ public class InsertLinkoopdbDatasTest {
         String sql11 = create("data_type_test11", "info varchar(128)");
         String sql12 = create("data_type_test12", "info char(128)");
         String sql13 = create("data_type_test13", "info boolean");
-        // hdfs 不支持 clob
+//        // hdfs 不支持 clob
         String sql14 = create("data_type_test14", "info clob");
         String sql15 = create("data_type_test15", "info bit(1)");
 //        String sql15 = create("data_type_test15", "info bit");
@@ -87,63 +86,63 @@ public class InsertLinkoopdbDatasTest {
             String test = "hello world";
             byte[] bytes = test.getBytes();
             int i = 1;
-//            statement1.setInt(i, 1);
-//            statement2.setInt(i,2);
-//            statement3.setInt(i, 3);
-//            statement4.setDouble(i, 4.5);
-//            statement5.setDouble(i, 5.5);
-//            statement6.setFloat(i, 6.5f);
-//            statement7.setBigDecimal(i, new BigDecimal(7));
-//            statement8.setInt(i, 8);
-//            statement9.setDate(i, date);
-//            statement10.setTimestamp(i, new Timestamp(System.currentTimeMillis()));
-//            statement11.setString(i, "11");
-//            statement12.setObject(i, "s");
-//            statement13.setBoolean(i, true);
-            statement14.setString(i, "14");
-////            statement15.setBoolean(i, true);
-//            statement15.setBoolean(i, false);
-//            statement16.setBytes(i, bytes);
-//            statement17.setBytes(i, bytes);
-//            statement18.setBytes(i, bytes);
-
             statement1.setInt(i, 1);
-            statement2.setInt(i, 2);
+            statement2.setInt(i,2);
             statement3.setInt(i, 3);
             statement4.setDouble(i, 4.5);
             statement5.setDouble(i, 5.5);
             statement6.setFloat(i, 6.5f);
-            statement7.setBigDecimal(i, null);
+            statement7.setBigDecimal(i, new BigDecimal(7));
             statement8.setInt(i, 8);
-            statement9.setDate(i, null);
-            statement10.setTimestamp(i, null);
-            statement11.setString(i, null);
-            statement12.setObject(i, null);
-            statement13.setBoolean(i, false);
-//            statement14.setString(i, null);
-            statement15.setBoolean(i, true);
-            statement16.setBytes(i, null);
-            statement17.setBytes(i, null);
-            statement18.setBytes(i, null);
+            statement9.setDate(i, date);
+            statement10.setTimestamp(i, new Timestamp(System.currentTimeMillis()));
+            statement11.setString(i, "11");
+            statement12.setObject(i, "s");
+            statement13.setBoolean(i, true);
+            statement14.setString(i, "14");
+//            statement15.setBoolean(i, true);
+            statement15.setBoolean(i, false);
+            statement16.setBytes(i, bytes);
+            statement17.setBytes(i, bytes);
+            statement18.setBytes(i, bytes);
 
-//            ret = statement1.executeUpdate();
-//            ret = statement2.executeUpdate();
-//            ret = statement3.executeUpdate();
-//            ret = statement4.executeUpdate();
-//            ret = statement5.executeUpdate();
-//            ret = statement6.executeUpdate();
-//            ret = statement7.executeUpdate();
-//            ret = statement8.executeUpdate();
-//            ret = statement9.executeUpdate();
-//            ret = statement10.executeUpdate();
-//            ret = statement11.executeUpdate();
-//            ret = statement12.executeUpdate();
-//            ret = statement13.executeUpdate();
+//            statement1.setInt(i, 1);
+//            statement2.setInt(i, 2);
+//            statement3.setInt(i, 3);
+//            statement4.setDouble(i, 4.5);
+//            statement5.setDouble(i, 5.5);
+//            statement6.setFloat(i, 6.5f);
+//            statement7.setBigDecimal(i, null);
+//            statement8.setInt(i, 8);
+//            statement9.setDate(i, null);
+//            statement10.setTimestamp(i, null);
+//            statement11.setString(i, null);
+//            statement12.setObject(i, null);
+//            statement13.setBoolean(i, false);
+//            statement14.setString(i, null);
+//            statement15.setBoolean(i, true);
+//            statement16.setBytes(i, null);
+//            statement17.setBytes(i, null);
+//            statement18.setBytes(i, null);
+
+            ret = statement1.executeUpdate();
+            ret = statement2.executeUpdate();
+            ret = statement3.executeUpdate();
+            ret = statement4.executeUpdate();
+            ret = statement5.executeUpdate();
+            ret = statement6.executeUpdate();
+            ret = statement7.executeUpdate();
+            ret = statement8.executeUpdate();
+            ret = statement9.executeUpdate();
+            ret = statement10.executeUpdate();
+            ret = statement11.executeUpdate();
+            ret = statement12.executeUpdate();
+            ret = statement13.executeUpdate();
             ret = statement14.executeUpdate();
-//            ret = statement15.executeUpdate();
-//            ret = statement16.executeUpdate();
-//            ret = statement17.executeUpdate();
-//            ret = statement18.executeUpdate();
+            ret = statement15.executeUpdate();
+            ret = statement16.executeUpdate();
+            ret = statement17.executeUpdate();
+            ret = statement18.executeUpdate();
             LinkoopDBUtils.closeConnection(connection, null, statement1);
             LinkoopDBUtils.closeConnection(connection, null, statement2);
             LinkoopDBUtils.closeConnection(connection, null, statement3);
@@ -169,9 +168,9 @@ public class InsertLinkoopdbDatasTest {
     }
 
     public static String create(String tableName, String type) {
-        String schema = "DATATRANS";
-//        String createsql = "CREATE TABLE IF NOT EXISTS datatrans." + tableName + "(" + type + ")";
-        String createsql = "CREATE TABLE IF NOT EXISTS " + schema + "." + tableName + "(" + type + ") engine pallas;";
+        String schema = "TESTHDFS";
+        String createsql = "CREATE TABLE IF NOT EXISTS " + schema + "." + tableName + "(" + type + ")";
+//        String createsql = "CREATE TABLE IF NOT EXISTS " + schema + "." + tableName + "(" + type + ") engine pallas;";
         LinkoopDBUtils.createTable(createsql);
         String sql  = "insert into " + schema + "." + tableName + " values(?);";
         return sql;
